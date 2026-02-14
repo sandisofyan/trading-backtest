@@ -1,87 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Trading Backtest</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0f172a;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    #chart {
-      height: 100vh;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Trading Backtest</title>
+    <style>
+        body {
+            margin: 0;
+            background: #0f172a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #chart {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
 
 <div id="chart"></div>
 
-<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+
 <script>
-  const chart = LightweightCharts.createChart(
-    document.getElementById('chart'),
-    {
-      layout: {
-        background: { color: '#0f172a' },
-        textColor: '#ffffff',
-      },
-      grid: {
-        vertLines: { color: '#1e293b' },
-        horzLines: { color: '#1e293b' },
-      },
-      timeScale: {
-        borderColor: '#334155',
-      },
-    }
-  );
+    const chart = LightweightCharts.createChart(
+        document.getElementById('chart'),
+        {
+            layout: {
+                background: { color: '#0f172a' },
+                textColor: '#ffffff',
+            },
+            grid: {
+                vertLines: { color: '#1e293b' },
+                horzLines: { color: '#1e293b' },
+            },
+            width: window.innerWidth,
+            height: window.innerHeight,
+        }
+    );
 
-  const candleSeries = chart.addCandlestickSeries({
-    upColor: '#22c55e',
-    downColor: '#ef4444',
-    borderUpColor: '#22c55e',
-    borderDownColor: '#ef4444',
-    wickUpColor: '#22c55e',
-    wickDownColor: '#ef4444',
-  });
+    const candleSeries = chart.addCandlestickSeries();
 
-  const emaFast = chart.addLineSeries({
-    color: '#3b82f6',
-    lineWidth: 2,
-  });
-
-  const emaSlow = chart.addLineSeries({
-    color: '#facc15',
-    lineWidth: 2,
-  });
-
-  const data = [
-    { time: '2024-01-01', open: 100, high: 110, low: 90, close: 105 },
-    { time: '2024-01-02', open: 105, high: 115, low: 100, close: 108 },
-    { time: '2024-01-03', open: 108, high: 120, low: 107, close: 118 },
-    { time: '2024-01-04', open: 118, high: 125, low: 110, close: 112 },
-    { time: '2024-01-05', open: 112, high: 130, low: 111, close: 128 },
-  ];
-
-  candleSeries.setData(data);
-
-  function calculateEMA(period) {
-    const k = 2 / (period + 1);
-    let emaArray = [];
-    let ema = data[0].close;
-
-    data.forEach((d, i) => {
-      ema = i === 0 ? d.close : d.close * k + ema * (1 - k);
-      emaArray.push({ time: d.time, value: ema });
-    });
-
-    return emaArray;
-  }
-
-  emaFast.setData(calculateEMA(5));
-  emaSlow.setData(calculateEMA(10));
+    candleSeries.setData([
+        { time: '2024-01-01', open: 100, high: 110, low: 95, close: 105 },
+        { time: '2024-01-02', open: 105, high: 115, low: 100, close: 110 },
+        { time: '2024-01-03', open: 110, high: 120, low: 108, close: 118 },
+        { time: '2024-01-04', open: 118, high: 125, low: 115, close: 122 },
+    ]);
 </script>
 
 </body>
