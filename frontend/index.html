@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Trading Backtest</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    #chart {
+      height: 100vh;
+    }
+  </style>
 </head>
 <body>
-  <h2>Trading Backtest Dashboard</h2>
-  <p>Website berhasil jalan 🎉</p>
+
+<div id="chart"></div>
+
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script>
+  const chart = LightweightCharts.createChart(
+    document.getElementById('chart'),
+    {
+      layout: {
+        background: { color: '#0f172a' },
+        textColor: '#ffffff',
+      },
+      grid: {
+        vertLines: { color: '#1e293b' },
+        horzLines: { color: '#1e293b' },
+      },
+      timeScale: {
+        borderColor: '#334155',
+      },
+    }
+  );
+
+  const candleSeries = chart.addCandlestickSeries({
+    upColor: '#22c55e',
+    downColor: '#ef4444',
+    borderUpColor: '#22c55e',
+    borderDownColor: '#ef4444',
+    wickUpColor: '#22c55e',
+    wickDownColor: '#ef4444',
+  });
+
+  candleSeries.setData([
+    { time: '2024-01-01', open: 100, high: 110, low: 90, close: 105 },
+    { time: '2024-01-02', open: 105, high: 115, low: 100, close: 108 },
+    { time: '2024-01-03', open: 108, high: 120, low: 107, close: 118 },
+    { time: '2024-01-04', open: 118, high: 125, low: 110, close: 112 },
+    { time: '2024-01-05', open: 112, high: 130, low: 111, close: 128 },
+  ]);
+</script>
+
 </body>
 </html>
